@@ -39,7 +39,7 @@ function Home() {
       </div>
      
       <div className="flex m-auto mb-10">
-      <div className="flex flex-wrap mx-20 lg:m-auto ">
+      <div className="flex flex-wrap mx-20 m-auto ">
         {
           data?.map((e)=>(
             <>

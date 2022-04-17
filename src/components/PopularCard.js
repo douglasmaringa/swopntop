@@ -11,7 +11,7 @@ function PopularCard({data}) {
     <div className=''>
         <div class="hover:bg-gray-100 cursor-pointer max-w-sm mt-5 ml-5 w-60 h-66 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
    
-        <img class="rounded-t-lg" src={data?.images[0]} alt="" />
+        <img style={{"width":"100%","height":"165px"}} class="rounded-t-lg" src={data?.images[0]} alt="" />
    
     <div class="p-5">
        
