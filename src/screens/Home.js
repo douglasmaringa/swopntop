@@ -81,7 +81,7 @@ function Home() {
       <h5 class="mb-2 text-lg font-bold tracking-tight ml-36 mt-4 text-gray-900 dark:text-white">Most Popular</h5>
     
       <div className="flex m-auto mb-10">
-      <div className="flex flex-wrap mx-20 lg:m-auto ">
+      <div className="flex flex-wrap mx-20 m-auto ">
       
        {
           data?.map((e)=>(
