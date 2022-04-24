@@ -5,6 +5,11 @@ import Map from '../components/Map';
 import { useSelector} from 'react-redux'
 import {db} from "../base"
 import firebase from 'firebase';
+import { render } from 'react-dom';
+import ReactWhatsapp from 'react-whatsapp';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import ButtonMailto from '../components/MailBtn';
+import EmailIcon from '@mui/icons-material/Email';
 
 function Product() {
     const {state} = useLocation();
@@ -14,6 +19,10 @@ function Product() {
     const[otherId,setOtherId]=useState("")
     const[userPro,setUserPro]=useState("")
     const[otherPro,setOtherPro]=useState("")
+    const[products,setProducts]=useState([])
+    const[selected,setSelected]=useState([])
+    
+ 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,9 +50,15 @@ function Product() {
       
         }
        })
+
+       db.collection("products").where("email","==",user.email).onSnapshot(querySnapshot=>{
+       
+         setProducts(querySnapshot.docs.map(doc=>({ ...doc.data(), id: doc.id })))
+       
+       })
     }, [])
     
-    
+    console.log(selected)
     console.log("you",user.email,userId)
     console.log("other",state.email,otherId)
 
@@ -59,7 +74,7 @@ function Product() {
             return alert("Already connected")
             
            }else{
-           
+           if(selected.length>0){
             db.collection('requests').add({
               timestamp:firebase.firestore.FieldValue.serverTimestamp(),
               from:user.email,
@@ -72,10 +87,14 @@ function Product() {
               item:state.id,
               status:false,
               declined:false,
-              itemName:state.name
+              itemName:state.name,
+              otherItem:selected,
               })
               alert("sent")
             navigate("/trade")
+           }else{
+             alert("Select what you are trading in exchange")
+           }
            }
       }
    })
@@ -125,11 +144,15 @@ function Product() {
                    <h1 className='ml-5 mt-5'>{state.username}</h1>
                </div>
               <div key={state.name} className=" ml-auto ">
-                <dt className="font-medium mt-5 text-gray-900">{state.email}</dt>
+                <dt className="font-medium mt-5 text-gray-900"><button class="bg-blue-500 mt-2 w-44 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => window.location = `mailto:${state.email}`}><EmailIcon/> Email Me</button></dt>
                
-                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        {state.mobile}
+                     <button class="bg-green-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                       
+                        <ReactWhatsapp number="1-212-736-5000" message="Hello World!!!">
+                        <span className=''><WhatsAppIcon/></span>{state.mobile} 
+                        </ReactWhatsapp>
                     </button>
+                   
               </div>
               </div>
 
@@ -155,9 +178,24 @@ function Product() {
                 <button onClick={trade} class="bg-blue-800 hover:bg-blue-700 ml-2 text-white font-bold py-2 px-4 rounded">
                        Trade Request
             </button>
-              </>)
+             
+            
+           <select value={selected} onChange={(e)=>{setSelected(e.target.value)}} className="block appearance-none w-full mt-2 bg-gray-200 border border-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                          {
+                            products?.length>0?(
+                            <>
+                            <option value="[-,-]">What are you trading in exchange?</option>
+                            {products.map(profile => <option value={[profile.name,profile.id]}>Your {profile.name}</option>)}
+                          
+                            </>):(
+                            <>
+                              <option value="[-,-]">What are you trading in exchange?</option>
+                              <option value="[cash,cash]">Cash</option>
+                            </>)
+                          }
+            </select>
+            </>)
             }
-           
             </div>
           </dl>
         </div>

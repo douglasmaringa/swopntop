@@ -37,7 +37,7 @@ export default slice.reducer
 
 const {chatLoading } = slice.actions
 
-export const createChat = ({yourID,otherID,itemName,item,to,from,yourPro,otherPro}) => async dispatch => {
+export const createChat = ({yourID,otherID,itemName,item,to,from,yourPro,otherPro,otherItem}) => async dispatch => {
    
     console.log(to,from,yourPro,otherPro)
     dispatch(chatLoading())
@@ -47,10 +47,12 @@ export const createChat = ({yourID,otherID,itemName,item,to,from,yourPro,otherPr
         members:[to,from],
         messages:[{"sender":"","time":"","message":""}],
         lastmessage:"",
+        final:false,
         itemName:itemName,
         itemID:item,
         yourPro:yourPro,
-        otherPro:otherPro
+        otherPro:otherPro,
+        otherItem:otherItem
     }).then(res=>{
       //adding the user into your friend list
       db.collection('users').doc(yourID).update({

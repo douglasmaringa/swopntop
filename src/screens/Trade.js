@@ -32,14 +32,14 @@ function Trade() {
     
   }, [user])
 
-  const accept =(id,yourID,otherID,itemName,item,to,from,yourPro,otherPro)=>{
+  const accept =(id,yourID,otherID,itemName,item,to,from,yourPro,otherPro,otherItem)=>{
       //change status to true
       
       db.collection('requests').doc(id).update({
         timestamp:firebase.firestore.FieldValue.serverTimestamp(),
         status:true
        })
-       dispatch(createChat({user,yourID,otherID,itemName,item,to,from,yourPro,otherPro}))
+       dispatch(createChat({user,yourID,otherID,itemName,item,to,from,yourPro,otherPro,otherItem}))
   }
 
   const decline =(id)=>{
@@ -75,7 +75,7 @@ function Trade() {
                     
                     <div key={e.id} className='mt-10 flex'>
                         <img style={{"borderRadius":"100%","width":"60px","height":"60px"}} src="https://picsum.photos/536/354" alt="" />
-                        <p className='ml-4'><span className='font-bold'>{e.from}</span> wants to trade your item <span className='font-bold' >{e.itemName}</span></p>
+                        <p className='ml-4'><span className='font-bold'>{e.from}</span> wants to trade your item <span className='font-bold' >{e.itemName}</span> With <span className='font-bold' >{e.otherItem}</span></p>
                     </div>
                     {
                         e.status?(<>
@@ -84,7 +84,7 @@ function Trade() {
                     </button>
                         </>):(<>
                             <div className='mt-4 flex'>
-                    <button onClick={()=>{accept(e.id,e.yourID,e.otherID,e.itemName,e.item,e.to,e.from,e.yourPro,e.otherPro)}} class="bg-transparent hover:bg-blue-500 text-white bg-black font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded">
+                    <button onClick={()=>{accept(e.id,e.yourID,e.otherID,e.itemName,e.item,e.to,e.from,e.yourPro,e.otherPro,e.otherItem)}} class="bg-transparent hover:bg-blue-500 text-white bg-black font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded">
                         ACCEPT
                     </button>
     
@@ -110,7 +110,7 @@ function Trade() {
                         <>
                          <div key={e.id} className='mt-10 flex'>
                     <img style={{"borderRadius":"100%","width":"60px","height":"60px"}} src="https://picsum.photos/536/354" alt="" />
-                    <p className='ml-4'>You Have proposed <span className='font-bold'>{e.to}</span> to trade his  <span className='font-bold' >{e.itemName}</span></p>
+                    <p className='ml-4'>You Have proposed <span className='font-bold'>{e.to}</span> to trade his  <span className='font-bold' >{e.itemName}</span> with your <span className='font-bold' >{e.otherItem}</span></p>
                 </div>
                 {
                     e.status?(<>

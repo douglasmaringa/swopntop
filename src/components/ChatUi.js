@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
 import firebase from 'firebase';
 import {db} from "../base"
+import Map from '../components/Map';
+import {Link} from "react-router-dom"
 
-function ChatUi({messages,user,id,you,other,otherPro,yourPro,members}) {
+function ChatUi({messages,user,id,you,other,otherPro,yourPro,members,final,itemID,itemName,otherItem}) {
     
     const[message,setMessage]=useState("")
 
@@ -20,6 +22,23 @@ function ChatUi({messages,user,id,you,other,otherPro,yourPro,members}) {
       alert("sent")
      
    }
+
+   const final2 = ()=>{
+          
+      //sending a message to the chat room 
+      db.collection('chatroom').doc(id).update({
+     final:true
+    })
+    db.collection('finalized').add({
+      messages:messages ,
+     user:user.email,
+     other:other,
+     item:[itemName,itemID],
+     otherItem:otherItem
+    })
+    alert("sent")
+   
+ }
     
   return (
    
@@ -61,21 +80,25 @@ function ChatUi({messages,user,id,you,other,otherPro,yourPro,members}) {
              </div>
           </div>
           <div class="flex items-center space-x-2">
-             <button type="button" class="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
+          <button  type="button" class="px-10 inline-flex items-center justify-center rounded-lg border h-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+              <span className='font-bold mr-2'>{itemName}</span>
+                vs
+                <span className='font-light ml-2'>{otherItem}</span>
              </button>
-             <button type="button" class="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+            {
+               final?(<>
+               
+               </>):(<>
+                  <button onClick={final2} type="button" class="w-40 inline-flex items-center justify-center rounded-lg border h-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+               Finalize Trade
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                 </svg>
              </button>
-             <button type="button" class="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                </svg>
-             </button>
+               </>)
+            }
+            
+             
           </div>
        </div>
 
@@ -117,8 +140,14 @@ function ChatUi({messages,user,id,you,other,otherPro,yourPro,members}) {
        }
        
 
-
-       <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+{
+   final?(<>
+   <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                     <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-red-300 text-gray-600"><Link to="/instructions">Click here for instructions</Link></span></div>
+                   
+                  </div>
+   </>):(<>
+      <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
           <div class="relative flex">
             
              <input value={message} onChange={(e)=>{setMessage(e.target.value)}} type="text" placeholder="Write your message!" class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"/>
@@ -133,6 +162,11 @@ function ChatUi({messages,user,id,you,other,otherPro,yourPro,members}) {
              </div>
           </div>
        </div>
+
+   </>)
+}
+      
+
     </div>
     
    

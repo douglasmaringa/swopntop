@@ -33,6 +33,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^4.0.0",
+    "react-whatsapp": "^0.2.1",
     "reactjs-dropdown-component": "^1.2.0"
   },
   "scripts": {

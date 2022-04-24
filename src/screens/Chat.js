@@ -39,7 +39,7 @@ console.log(data)
     <div>
       <Nav/>  
       <h1 className='ml-4 text-lg cursor-pointer' onClick={()=>{navigate("/connections")}}><KeyboardBackspaceIcon/></h1>
-   <ChatUi user={user} id={state.id} you={you} other={other} members={data[0]?.members[0]} otherPro={data[0]?.otherPro} yourPro={data[0]?.yourPro}  messages={ data[0]?.messages}/>
+   <ChatUi user={user} id={state.id} you={you} other={other} members={data[0]?.members[0]} otherPro={data[0]?.otherPro} yourPro={data[0]?.yourPro}  messages={ data[0]?.messages} final={data[0]?.final} itemID={data[0]?.itemID} itemName={data[0]?.itemName} otherItem={data[0]?.otherItem}/>
     </div>
   )
 }

@@ -17,12 +17,14 @@ import ProfileFavourite from './screens/ProfileFavourite';
 import Trade from './screens/Trade';
 import Connections from './screens/Connections';
 import Chat from './screens/Chat';
+import Instructions from './screens/Instructions';
 
 
 function App() {
   return (
     <BrowserRouter>
     <Routes>
+    <Route path="/instructions" element={<Instructions/>} />
     <Route path="/chat" element={<Chat/>} />
     <Route path="/connections" element={<Connections/>} />
     <Route path="/trade" element={<Trade/>} />

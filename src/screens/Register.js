@@ -153,6 +153,14 @@ console.log(step)
                         <input value={password} onChange={(e)=>{setPassword(e.target.value)}}  className="appearance-none block w-full bg-gray-200  border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******"/>
                         <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
                       </div>
+
+                      <div className="w-full mt-4 px-3 mb-6 md:mb-0">
+                        <label className="block uppercase tracking-wide  text-xs font-bold mb-2" for="grid-first-name">
+                          Mobile
+                        </label>
+                        <input value={mobile} onChange={(e)=>{setMobile(e.target.value)}} className="appearance-none block w-full bg-gray-200  border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Mobile"/>
+                       
+                      </div>
                     </div>
                    
                     <div className="flex flex-wrap -mx-3 mb-2">
