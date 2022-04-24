@@ -148,7 +148,7 @@ function Product() {
                
                      <button class="bg-green-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                        
-                        <ReactWhatsapp number="1-212-736-5000" message="Hello World!!!">
+                        <ReactWhatsapp number={state.mobile} message="Hello World!!!">
                         <span className=''><WhatsAppIcon/></span>{state.mobile} 
                         </ReactWhatsapp>
                     </button>
